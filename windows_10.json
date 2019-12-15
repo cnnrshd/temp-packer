@@ -24,9 +24,10 @@
 		"cpus": "{{user `cpus`}}",
 		"disk_size": "{{user `disk_size`}}",
 		"floppy_files": [
-		  "{{user `autounattend`}}",
+      "{{user `autounattend`}}",
+      "./scripts/disable-winrm.ps1",
+      "./scripts/enable-winrm.ps1",
 		  "./scripts/fixnetwork.ps1",
-		  "./scripts/disable-screensaver.ps1",
 		  "./scripts/configure-remoting-for-ansible.ps1"
 		],
 		"guest_additions_mode": "disable",
