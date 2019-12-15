@@ -123,8 +123,8 @@
                     <WillShowUI>OnError</WillShowUI>
                 </ProductKey>
                 <AcceptEula>true</AcceptEula>
-                <FullName>Whiteteam</FullName>
-                <Organization>Whiteteam</Organization>
+                <FullName>Vagrant</FullName>
+                <Organization>Vagrant</Organization>
             </UserData>
         </component>
     </settings>
@@ -133,7 +133,7 @@
             <OEMInformation>
                 <HelpCustomized>false</HelpCustomized>
             </OEMInformation>
-            <ComputerName>windows-2019</ComputerName>
+            <ComputerName>vagrant-2019</ComputerName>
             <TimeZone>Pacific Standard Time</TimeZone>
             <RegisteredOwner/>
         </component>
@@ -174,11 +174,11 @@
         <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
             <AutoLogon>
                 <Password>
-                    <Value>P@ssw0rd-123!</Value>
+                    <Value>vagrant</Value>
                     <PlainText>true</PlainText>
                 </Password>
                 <Enabled>true</Enabled>
-                <Username>whiteteam</Username>
+                <Username>vagrant</Username>
             </AutoLogon>
             <FirstLogonCommands>
                 <SynchronousCommand wcm:action="add">
@@ -230,9 +230,9 @@
                     <Description>Disable Hibernation Mode</Description>
                 </SynchronousCommand>
                 <SynchronousCommand wcm:action="add">
-                    <CommandLine>cmd.exe /c wmic useraccount where "name='whiteteam'" set PasswordExpires=FALSE</CommandLine>
+                    <CommandLine>cmd.exe /c wmic useraccount where "name='vagrant'" set PasswordExpires=FALSE</CommandLine>
                     <Order>10</Order>
-                    <Description>Disable password expiration for whiteteam user</Description>
+                    <Description>Disable password expiration for vagrant user</Description>
                 </SynchronousCommand>
                 <!-- WITHOUT WINDOWS UPDATES -->
                 <!---->
@@ -276,19 +276,19 @@
             </OOBE>
             <UserAccounts>
                 <AdministratorPassword>
-                    <Value>P@ssw0rd-123!</Value>
+                    <Value>vagrant</Value>
                     <PlainText>true</PlainText>
                 </AdministratorPassword>
                 <LocalAccounts>
                     <LocalAccount wcm:action="add">
                         <Password>
-                            <Value>P@ssw0rd-123!</Value>
+                            <Value>vagrant</Value>
                             <PlainText>true</PlainText>
                         </Password>
                         <Group>administrators</Group>
-                        <DisplayName>whiteteam</DisplayName>
-                        <Name>whiteteam</Name>
-                        <Description>whiteteam User</Description>
+                        <DisplayName>Vagrant</DisplayName>
+                        <Name>vagrant</Name>
+                        <Description>Vagrant User</Description>
                     </LocalAccount>
                 </LocalAccounts>
             </UserAccounts>

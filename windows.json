@@ -2,7 +2,7 @@
 	"builders": [
 	  {
 		"boot_command": "",
-		"boot_wait": "6m",
+		"boot_wait": "{{user `boot_wait`}}",
 		"communicator": "winrm",
 		"cpus": "{{user `cpus`}}",
 		"disk_size": "{{user `disk_size`}}",
@@ -47,6 +47,7 @@
 	],
 	"variables": {
 	  "autounattend": "./answer_files/10/Autounattend.xml",
+	  "boot_wait": "0s",
 	  "type": "virtualbox-iso",
 	  "disk_size": "25600",
 	  "cpus": "2",

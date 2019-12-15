@@ -23,12 +23,12 @@
             </OOBE>
             <AutoLogon>
                 <Password>
-                    <Value>vagrant</Value>
+                    <Value>whiteteam</Value>
                     <PlainText>true</PlainText>
                 </Password>
                 <Enabled>true</Enabled>
                 <LogonCount>1</LogonCount>
-                <Username>vagrant</Username>
+                <Username>P@ssw0rd-123!</Username>
             </AutoLogon>
         </component>
     </settings>
