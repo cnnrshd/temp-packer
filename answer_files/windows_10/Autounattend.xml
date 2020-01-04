@@ -100,8 +100,13 @@
                 -->
 
                 <!-- Product Key from https://www.microsoft.com/en-us/evalcenter/evaluate-windows-10-enterprise -->
+                <!--
                 <ProductKey>2FMYP-QCY43-QR9VK-WTVCK
                     <WillShowUI>Never</WillShowUI>
+                </ProductKey>
+                -->
+                <ProductKey>
+                    <WillShowUI>OnError</WillShowUI>
                 </ProductKey>
             </UserData>
             <ImageInstall>
@@ -208,6 +213,7 @@
                     <Order>5</Order>
                     <RequiresUserInput>true</RequiresUserInput>
                 </SynchronousCommand>
+                <!--
                 <SynchronousCommand wcm:action="add">
                     <CommandLine>%SystemRoot%\System32\reg.exe ADD HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\ /v HideFileExt /t REG_DWORD /d 0 /f</CommandLine>
                     <Order>6</Order>
@@ -228,6 +234,7 @@
                     <Order>9</Order>
                     <Description>Show Administrative Tools in Start Menu</Description>
                 </SynchronousCommand>
+                -->
                 <SynchronousCommand wcm:action="add">
                     <CommandLine>%SystemRoot%\System32\reg.exe ADD HKLM\SYSTEM\CurrentControlSet\Control\Power\ /v HibernateFileSizePercent /t REG_DWORD /d 0 /f</CommandLine>
                     <Order>10</Order>
@@ -299,7 +306,7 @@
             </OEMInformation>
             <!-- Rename computer here. -->
             <ComputerName>windows-10</ComputerName>
-            <TimeZone>Pacific Standard Time</TimeZone>
+            <TimeZone>Eastern Standard Time</TimeZone>
             <RegisteredOwner/>
         </component>
         <component xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Microsoft-Windows-Security-SPP-UX" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">

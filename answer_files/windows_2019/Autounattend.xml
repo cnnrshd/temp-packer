@@ -134,7 +134,7 @@
                 <HelpCustomized>false</HelpCustomized>
             </OEMInformation>
             <ComputerName>windows-2019</ComputerName>
-            <TimeZone>Pacific Standard Time</TimeZone>
+            <TimeZone>Eastern Standard Time</TimeZone>
             <RegisteredOwner/>
         </component>
         <component name="Microsoft-Windows-ServerManager-SvrMgrNc" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
@@ -199,6 +199,7 @@
                     <Order>3</Order>
                     <RequiresUserInput>true</RequiresUserInput>
                 </SynchronousCommand>
+                <!--
                 <SynchronousCommand wcm:action="add">
                     <CommandLine>%SystemRoot%\System32\reg.exe ADD HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\ /v HideFileExt /t REG_DWORD /d 0 /f</CommandLine>
                     <Order>4</Order>
@@ -219,6 +220,7 @@
                     <Order>7</Order>
                     <Description>Show Administrative Tools in Start Menu</Description>
                 </SynchronousCommand>
+                -->
                 <SynchronousCommand wcm:action="add">
                     <CommandLine>%SystemRoot%\System32\reg.exe ADD HKLM\SYSTEM\CurrentControlSet\Control\Power\ /v HibernateFileSizePercent /t REG_DWORD /d 0 /f</CommandLine>
                     <Order>8</Order>

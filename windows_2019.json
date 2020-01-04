@@ -1,66 +1,66 @@
 {
 	"variables": {
-	  "autounattend": "./answer_files/2019/Autounattend.xml",
-	  "boot_wait": "0s",
-	  "disk_size": "25600",
-	  "cpus": "2",
-	  "memory": "2048",
-	  "guest_os_type": "Windows2016_64",
-	  "vm_name": "windows_2019",
-	  "headless": "false",
-	  "iso_checksum": "221F9ACBC727297A56674A0F1722B8AC7B6E840B4E1FFBDD538A9ED0DA823562",
-	  "iso_checksum_type": "sha256",
+		"guest_os_type": "Windows2016_64",
+		"vm_name": "windows_2019",
+		"iso_checksum": "221F9ACBC727297A56674A0F1722B8AC7B6E840B4E1FFBDD538A9ED0DA823562",
 		"iso_url": "https://software-download.microsoft.com/download/sg/17763.379.190312-0539.rs5_release_svc_refresh_SERVER_EVAL_x64FRE_en-us.iso",
 		"manually_download_iso_from": "https://www.microsoft.com/en-us/evalcenter/evaluate-windows-server-2019",
-	  "restart_timeout": "5m",
-	  "winrm_timeout": "10m"
-	  },
-	"builders": [
-	  {
-		"boot_command": "",
-		"boot_wait": "{{user `boot_wait`}}",
-		"communicator": "winrm",
-		"cpus": "{{user `cpus`}}",
-		"disk_size": "{{user `disk_size`}}",
-		"floppy_files": [
-		  "{{user `autounattend`}}",
-      "./scripts/disable-winrm.ps1",
-      "./scripts/fixnetwork.ps1",
-      "./scripts/enable-winrm.ps1",
-		  "./scripts/configure-remoting-for-ansible.ps1"
-		],
-		"guest_additions_mode": "disable",
-		"guest_os_type":  "{{user `guest_os_type`}}",
-		"headless": "{{user `headless`}}",
-		"iso_checksum": "{{user `iso_checksum`}}",
-		"iso_checksum_type": "{{user `iso_checksum_type`}}",
-		"iso_url": "{{user `iso_url`}}",
-		"memory": "{{user `memory`}}",
-		"shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+		"autounattend": "./answer_files/{{user `vm_name`}}/Autounattend.xml",	
+		"boot_wait": "0s",
 		"type": "virtualbox-iso",
-		"vm_name": "{{user `vm_name`}}",
-		"winrm_password": "P@ssw0rd-123!",
-		"winrm_timeout": "{{user `winrm_timeout`}}",
-		"winrm_username": "whiteteam",
-		"output_directory": "./builds/{{user `vm_name`}}"
-	  }
+		"disk_size": "15360",
+		"cpus": "2",
+		"memory": "2048",
+		"headless": "false",
+		"iso_checksum_type": "sha256",
+		"restart_timeout": "5m",
+		"winrm_timeout": "10m"
+	},
+	"builders": [
+		{
+			"boot_command": "",
+			"boot_wait": "{{user `boot_wait`}}",
+			"communicator": "winrm",
+			"cpus": "{{user `cpus`}}",
+			"disk_size": "{{user `disk_size`}}",
+			"floppy_files": [
+				"{{user `autounattend`}}",
+				"./scripts/disable-winrm.ps1",
+				"./scripts/fixnetwork.ps1",
+				"./scripts/enable-winrm.ps1",
+				"./scripts/configure-remoting-for-ansible.ps1"
+			],
+			"guest_additions_mode": "disable",
+			"guest_os_type":  "{{user `guest_os_type`}}",
+			"headless": "{{user `headless`}}",
+			"iso_checksum": "{{user `iso_checksum`}}",
+			"iso_checksum_type": "{{user `iso_checksum_type`}}",
+			"iso_url": "{{user `iso_url`}}",
+			"memory": "{{user `memory`}}",
+			"shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+			"type": "{{user `type`}}",
+			"vm_name": "{{user `vm_name`}}",
+			"winrm_password": "P@ssw0rd-123!",
+			"winrm_timeout": "{{user `winrm_timeout`}}",
+			"winrm_username": "whiteteam",
+			"output_directory": "./builds/{{user `vm_name`}}/{{user `type`}}"
+		}
 	],
 	"provisioners": [
-	  {
-		"restart_timeout": "{{user `restart_timeout`}}",
-		"type": "windows-restart"
-	  },
-	  {
-		"execute_command": "{{ .Vars }} cmd /c \"{{ .Path }}\"",
-		"remote_path": "/tmp/script.bat",
-		"scripts": [
-		  "./scripts/set-winrm-automatic.bat",
-		  "./scripts/uac-enable.bat",
-		  "./scripts/dis-updates.bat",
-		  "./scripts/compact.bat"
-		],
-		"type": "windows-shell"
-	  }
+		{
+			"restart_timeout": "{{user `restart_timeout`}}",
+			"type": "windows-restart"
+		},
+		{
+			"execute_command": "{{ .Vars }} cmd /c \"{{ .Path }}\"",
+			"remote_path": "/tmp/script.bat",
+			"scripts": [
+				"./scripts/set-winrm-automatic.bat",
+				"./scripts/uac-enable.bat",
+				"./scripts/dis-updates.bat",
+				"./scripts/compact.bat"
+			],
+			"type": "windows-shell"
+		}
 	]
-  }
-  
+  }  
