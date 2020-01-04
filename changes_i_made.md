@@ -1,7 +1,4 @@
 ## provisioners
-- changed:
-## notes
-- use the `answer_files\<vm>\Autounattended.xml`, not the `<vm>\files\Autounattended.xml`
 ### Changed
 #### This
 ```
