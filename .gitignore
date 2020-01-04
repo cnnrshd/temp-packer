@@ -19,3 +19,4 @@ tmp
 /issues/
 *.iso
 path-to.vmx
+/builds/
