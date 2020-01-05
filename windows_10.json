@@ -65,7 +65,6 @@
 			"remote_path": "/tmp/script.bat",
 			"scripts": [
 				"./scripts/set-winrm-automatic.bat",
-				"./scripts/uac-enable.bat",
 				"./scripts/dis-updates.bat",
 				"./scripts/compact.bat"
 			],
