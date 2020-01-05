@@ -10,7 +10,6 @@
 		"iso_url": "https://software-download.microsoft.com/download/pr/18362.30.190401-1528.19h1_release_svc_refresh_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso",		
 		"autounattend": "./{{user `vm_name`}}/files/Autounattend.xml",
 
-		"type": "virtualbox-iso",		
 		"headless": "false",
 
 		"disk_size": "15360",
@@ -18,13 +17,13 @@
 		"memory": "2048",
 
 		"restart_timeout": "5m",
-		"winrm_timeout": "10m",
+		"winrm_timeout": "30m",
 		"boot_wait": "0s"
 	},
 	"builders": [
 		{
 			"vm_name": "{{user `vm_name`}}",
-			"type": "{{user `type`}}",
+			"type": "virtualbox-iso",
 			"guest_additions_mode": "disable",
 			"guest_os_type":  "{{user `guest_os_type`}}",
 			"headless": "{{user `headless`}}",

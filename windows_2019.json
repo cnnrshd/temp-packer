@@ -11,7 +11,6 @@
 		"manually_download_iso_from": "https://www.microsoft.com/en-us/evalcenter/evaluate-windows-server-2019",
 		"autounattend": "./{{user `vm_name`}}/files/Autounattend.xml",
 
-		"type": "virtualbox-iso",		
 		"headless": "false",
 
 		"disk_size": "15360",
@@ -19,13 +18,13 @@
 		"memory": "2048",
 
 		"restart_timeout": "5m",
-		"winrm_timeout": "10m",
+		"winrm_timeout": "30m",
 		"boot_wait": "0s"
 	},
 	"builders": [
 		{
 			"vm_name": "{{user `vm_name`}}",
-			"type": "{{user `type`}}",
+			"type": "virtualbox-iso",
 			"guest_additions_mode": "disable",
 			"guest_os_type":  "{{user `guest_os_type`}}",
 			"headless": "{{user `headless`}}",
