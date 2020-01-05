@@ -52,7 +52,7 @@
 			"iso_url": "{{user `iso_url`}}",
 
 			"shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
-			"output_directory": "./builds/{{user `vm_name`}}/{{user `type`}}"
+			"output_directory": "./builds/{{user `vm_name`}}"
 		}
 	],
 	"provisioners": [
