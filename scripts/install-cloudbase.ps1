@@ -31,3 +31,4 @@ while ($result -eq $null) {
     sleep 5
 	$result = Get-InstalledApps | where {$_.DisplayName -like "*Cloudbase-Init*"}
 }
+Remove-item $outfile
