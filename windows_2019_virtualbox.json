@@ -25,6 +25,7 @@
 	"builders": [
 		{
 			"http_directory": "./files/",
+			
 			"vm_name": "{{user `vm_name`}}",
 			"type": "virtualbox-iso",
 			"guest_additions_mode": "disable",

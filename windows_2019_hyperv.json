@@ -26,6 +26,7 @@
 	"builders": [
 		{
 			"http_directory": "./files/",
+			
 			"vm_name": "{{user `vm_name`}}",
 			"type": "hyperv-iso",
 			"guest_additions_mode": "disable",
