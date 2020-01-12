@@ -12,7 +12,7 @@
 		"manually_download_iso_from": "https://www.microsoft.com/en-us/evalcenter/evaluate-windows-server-2019",
 		"autounattend": "./{{user `os_version`}}/files/Autounattend.xml",
 
-		"headless": "false",
+		"headless": "true",
 
 		"disk_size": "15360",
 		"cpus": "2",

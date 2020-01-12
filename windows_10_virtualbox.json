@@ -11,7 +11,7 @@
 		"iso_url": "https://software-download.microsoft.com/download/pr/18362.30.190401-1528.19h1_release_svc_refresh_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso",		
 		"autounattend": "./{{user `os_version`}}/files/Autounattend.xml",
 
-		"headless": "false",
+		"headless": "true",
 
 		"disk_size": "15360",
 		"cpus": "2",
