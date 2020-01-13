@@ -61,6 +61,13 @@
 	],
 	"provisioners": [
 		{
+			"environment_vars": [
+				"OS_VERS={{user `os_version`}}"
+			],
+			"type": "powershell",
+			"script": "./scripts/install-drivers.ps1"
+		},
+		{
 			"type": "powershell",
 			"script": "./scripts/install-cloudbase.ps1"
 		},

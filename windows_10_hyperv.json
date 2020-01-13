@@ -3,7 +3,7 @@
 
 	"variables": {
 		"guest_os_type": "Windows10_64",
-		"vm_name": "windows_10_virtualbox",
+		"vm_name": "windows_10_hyperv",
 		"os_version": "windows_10",
 
 		"iso_checksum_type": "sha256",
@@ -63,6 +63,13 @@
 		}
 	],
 	"provisioners": [
+		{
+			"environment_vars": [
+				"OS_VERS={{user `os_version`}}"
+			],
+			"type": "powershell",
+			"script": "./scripts/install-drivers.ps1"
+		},
 		{
 			"type": "powershell",
 			"script": "./scripts/install-cloudbase.ps1"
