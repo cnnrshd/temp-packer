@@ -6,7 +6,7 @@ if ($null -eq $build) {
 }
 Write-Host $build
 # getting links available
-$page = wget "http:\\$Env:PACKER_HTTP_ADDR/virtio-drivers/$build/"
+$page = wget -UseBasicParsing "http:\\$Env:PACKER_HTTP_ADDR/virtio-drivers/$build"
 $page.links | fl -Property *
 set-location C:\Users\whiteteam\Desktop
 
