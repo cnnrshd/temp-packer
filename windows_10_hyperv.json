@@ -64,6 +64,15 @@
 	],
 	"provisioners": [
 		{
+			"type": "powershell",
+			"inline": "bcdedit /set nointegritychecks off"
+		},
+		{
+			"type": "windows-restart",
+			"pause_before": "15s",
+			"restart_timeout": "{{user `restart_timeout`}}"
+		},
+		{
 			"environment_vars": [
 				"OS_VERS={{user `os_version`}}"
 			],
