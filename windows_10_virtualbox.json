@@ -55,26 +55,47 @@
 			"iso_url": "{{user `iso_url`}}",
 
 			"shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
-			"output_directory": "./builds/{{user `vm_name`}}"
+			"output_directory": "./builds/{{user `vm_name`}}",
+			"vboxmanage": [	
+				[
+					"storagectl",
+					"{{.Name}}",
+					"--name",
+					"SATA Controller",
+					"--add",
+					"sata",
+					"--controller",
+					"IntelAHCI",
+					"--portcount",
+					"2"
+				],
+				[
+					"storageattach",
+					"{{.Name}}",
+					"--storagectl",
+					"SATA Controller",
+					"--port",
+					"0",
+					"--device",
+					"0",
+					"--type",
+					"dvddrive",
+					"--medium",
+					"./iso/virtio-win-0.1.171.iso"
+				]
+			],
+			"vboxmanage_post": [
+				[
+					"storagectl",
+					"{{.Name}}",
+					"--name",
+					"SATA Controller",
+					"--remove"
+				]
+			]
 		}
 	],
 	"provisioners": [
-		{
-			"type": "powershell",
-			"inline": "bcdedit /set nointegritychecks off"
-		},
-		{
-			"type": "windows-restart",
-			"pause_before": "15s",
-			"restart_timeout": "{{user `restart_timeout`}}"
-		},
-		{
-			"environment_vars": [
-				"OS_VERS={{user `os_version`}}"
-			],
-			"type": "powershell",
-			"script": "./scripts/install-drivers.ps1"
-		},
 		{
 			"type": "powershell",
 			"script": "./scripts/install-cloudbase.ps1"

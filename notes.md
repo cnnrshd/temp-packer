@@ -1,3 +1,6 @@
+## Some weird virtualbox stuff
+- IDE controller is called "IDE Controller", and it has 2 ports by default. Both are in use, first
+
 ## some weird stuff on GCP
 - Packer, or Ubuntu, has an issue with using the {{user `os_version`}} inside the vars - it doesn't seem to copy correctly. It gives the error ```Error initializing core: error interpolating default value for 'autounattend': template: root:1:4: executing "root " at <user `os_version`>: error calling user: test```
   - This needs to be hard-coded for some reason. Changing the floppy string to be the correct location (but based on user`os)
