@@ -1,0 +1,177 @@
+{
+	"description": "File to build Windows 7 x64 using VirtualBox as the builder.",
+
+	"variables": {
+		"guest_os_type": "Windows7_64",
+		"vm_name": "windows_7_virtualbox",
+		"os_version": "windows_7",
+		
+		"iso_checksum_type": "md5",
+		"iso_checksum": "1d0d239a252cb53e466d39e752b17c28",
+		"iso_url": "http://care.dlservice.microsoft.com/dl/download/evalx/win7/x64/EN/7600.16385.090713-1255_x64fre_enterprise_en-us_EVAL_Eval_Enterprise-GRMCENXEVAL_EN_DVD.iso",		
+		"autounattend": "./{{user `os_version`}}/files/Autounattend.xml",
+
+		"headless": "true",
+
+		"disk_size": "15360",
+		"cpus": "2",
+		"memory": "2048",
+
+		"restart_timeout": "2h",
+		"winrm_timeout": "2h",
+		"boot_wait": "30s"
+	},
+	"builders": [
+	  {
+		"http_directory": "./files/",
+			
+		"vm_name": "{{user `vm_name`}}",
+		"type": "virtualbox-iso",
+		"guest_additions_mode": "disable",
+		"guest_os_type":  "{{user `guest_os_type`}}",
+		"headless": "{{user `headless`}}",
+
+		"boot_command": "",
+		"boot_wait": "{{user `boot_wait`}}",
+
+		"communicator": "winrm",
+		"winrm_password": "P@ssw0rd-123!",
+		"winrm_timeout": "{{user `winrm_timeout`}}",
+		"winrm_username": "whiteteam",
+
+		"cpus": "{{user `cpus`}}",
+		"disk_size": "{{user `disk_size`}}",		
+		"memory": "{{user `memory`}}",
+		"floppy_files": [
+		  "{{user `autounattend`}}",
+		  "./scripts/dis-updates.ps1",
+		  "./scripts/fixnetwork.ps1",
+		  "./scripts/microsoft-updates.bat",
+		  "./scripts/enable-winrm.ps1"
+		],
+
+		"iso_checksum": "{{user `iso_checksum`}}",
+		"iso_checksum_type": "{{user `iso_checksum_type`}}",
+		"iso_url": "{{user `iso_url`}}",
+
+		"shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+		"output_directory": "./builds/{{user `vm_name`}}",
+		"vboxmanage": [
+			[
+				"storagectl",
+				"{{.Name}}",
+				"--name",
+				"SATA Controller",
+				"--add",
+				"sata",
+				"--controller",
+				"IntelAHCI",
+				"--portcount",
+				"2"
+			],
+			[
+				"storageattach",
+				"{{.Name}}",
+				"--storagectl",
+				"SATA Controller",
+				"--port",
+				"0",
+				"--device",
+				"0",
+				"--type",
+				"dvddrive",
+				"--medium",
+				"./iso/virtio-win-0.1.171.iso"
+			]
+		],
+		"vboxmanage_post": [
+			[
+				"storagectl",
+				"{{.Name}}",
+				"--name",
+				"SATA Controller",
+				"--remove"
+			]
+		]
+	  }
+	],
+	"provisioners": [
+		{
+			"script": "./windows_7/files/update-sp1.ps1",
+			"type": "powershell"
+		},
+		{
+			"type": "windows-restart",
+			"restart_timeout": "20m"
+		},
+		{
+			"script": "./windows_7/files/update-2019-03-servicing-stack.ps1",
+			"type": "powershell"
+		},
+		{
+			"type": "windows-restart",
+			"restart_timeout": "20m"
+		},
+		{
+			"script": "./windows_7/files/update-2019-09-sha2.ps1",
+			"type": "powershell"
+		},
+		{
+			"type": "windows-restart",
+			"restart_timeout": "20m"
+		},
+		{
+			"script": "./windows_7/files/update-2019-09-servicing-stack.ps1",
+			"type": "powershell"
+		},
+		{
+			"type": "windows-restart",
+			"restart_timeout": "20m"
+		},
+		{
+			"script": "./windows_7/files/update-2016-convenience-rollup.ps1",
+			"type": "powershell"
+		},
+		{
+			"type": "windows-restart",
+			"restart_timeout": "20m"
+		},
+		{
+			"script": "./windows_7/files/update-2019-10-update-rollup.ps1",
+			"type": "powershell"
+		},
+		{
+			"type": "windows-restart",
+			"restart_timeout": "20m"
+		},
+		{
+			"script": "./windows_7/files/update-net48.ps1",
+			"type": "powershell"
+		},
+		{
+			"type": "windows-restart",
+			"restart_timeout": "20m"
+		},
+		{
+			"script": "./windows_7/files/update-powershell-5.1.ps1",
+			"type": "powershell"
+		},
+		{
+			"type": "windows-restart",
+			"restart_timeout": "20m"
+		},
+		{
+			"scripts": [
+				"./scripts/set-winrm-automatic.bat",
+				"./scripts/enable-rdp.bat",
+				"./scripts/enable-winrm.bat",
+				"./scripts/compact.bat"
+			],
+			"type": "windows-shell"
+		},
+		{
+			"type": "powershell",
+			"script": "./scripts/configure-remoting-for-ansible.ps1"
+		}
+	]
+  }  
