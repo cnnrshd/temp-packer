@@ -1,3 +1,6 @@
+# TODO:
+- Change the DNS server to 1.1.1.1 for resolving
+
 ## Some weird virtualbox stuff
 - IDE controller is called "IDE Controller", and it has 2 ports by default. Both are in use, first
 
