@@ -161,7 +161,7 @@
                             <Value>P@ssw0rd-123!</Value>
                             <PlainText>true</PlainText>
                         </Password>
-                        <Description>whiteteam User</Description>
+                        <Description>Whiteteam User</Description>
                         <DisplayName>whiteteam</DisplayName>
                         <Group>administrators</Group>
                         <Name>whiteteam</Name>

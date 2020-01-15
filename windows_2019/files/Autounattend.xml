@@ -295,7 +295,7 @@
                         <Group>administrators</Group>
                         <DisplayName>whiteteam</DisplayName>
                         <Name>whiteteam</Name>
-                        <Description>whiteteam User</Description>
+                        <Description>Whiteteam User</Description>
                     </LocalAccount>
                 </LocalAccounts>
             </UserAccounts>
