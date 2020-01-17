@@ -1,15 +1,20 @@
-{	
-	"description": "File to build windows 10 x64 eval using virtualbox as the builder. Configures the machine to accept winrm remoting.",
-
+{
+	"description": "File to build windows 2019 x64 eval using virtualbox as the builder. Configures the machine to accept winrm remoting. Installs cloudbaseinit",
+	
 	"variables": {
-		"guest_os_type": "Windows10_64",
-		"vm_name": "windows_10_virtualbox",
-		"os_version": "windows_10",
+		"guest_os_type": "Windows2016_64",
+		"vm_name": "windows_2019_virtualbox",
+		"os_version": "windows_2019",
 
+		"shared_files": ".././files/",
+		"os_folder": "./files/",
+		"scripts_folder": ".././scripts/",
+		
 		"iso_checksum_type": "sha256",
-		"iso_checksum": "ab4862ba7d1644c27f27516d24cb21e6b39234eb3301e5f1fb365a78b22f79b3",
-		"iso_url": "https://software-download.microsoft.com/download/pr/18362.30.190401-1528.19h1_release_svc_refresh_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso",		
-		"autounattend": "./{{user `os_version`}}/files/Autounattend.xml",
+		"iso_checksum": "221F9ACBC727297A56674A0F1722B8AC7B6E840B4E1FFBDD538A9ED0DA823562",
+		"iso_url": "https://software-download.microsoft.com/download/sg/17763.379.190312-0539.rs5_release_svc_refresh_SERVER_EVAL_x64FRE_en-us.iso",		
+		"manually_download_iso_from": "https://www.microsoft.com/en-us/evalcenter/evaluate-windows-server-2019",
+		"autounattend": "./files/Autounattend.xml",
 
 		"headless": "true",
 
@@ -23,7 +28,7 @@
 	},
 	"builders": [
 		{
-			"http_directory": "./files/",
+			"http_directory": "{{user `shared_files`}}",
 			
 			"vm_name": "{{user `vm_name`}}",
 			"type": "virtualbox-iso",
@@ -44,10 +49,10 @@
 			"memory": "{{user `memory`}}",
 			"floppy_files": [
 				"{{user `autounattend`}}",
-				"./scripts/disable-winrm.ps1",			
-				"./scripts/fixnetwork.ps1",
-				"./scripts/enable-winrm.ps1",
-				"./scripts/configure-remoting-for-ansible.ps1"
+				"{{user `scripts_folder`}}disable-winrm.ps1",
+				"{{user `scripts_folder`}}fixnetwork.ps1",
+				"{{user `scripts_folder`}}enable-winrm.ps1",
+				"{{user `scripts_folder`}}configure-remoting-for-ansible.ps1"
 			],
 						
 			"iso_checksum": "{{user `iso_checksum`}}",
@@ -55,7 +60,7 @@
 			"iso_url": "{{user `iso_url`}}",
 
 			"shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
-			"output_directory": "./builds/{{user `vm_name`}}",
+			"output_directory": ".././builds/{{user `vm_name`}}",
 			"vboxmanage": [	
 				[
 					"storagectl",
@@ -81,7 +86,7 @@
 					"--type",
 					"dvddrive",
 					"--medium",
-					"./iso/virtio-win-0.1.171.iso"
+					".././iso/virtio-win-0.1.171.iso"
 				]
 			],
 			"vboxmanage_post": [
@@ -98,7 +103,7 @@
 	"provisioners": [
 		{
 			"type": "powershell",
-			"script": "./scripts/install-cloudbase.ps1"
+			"script": "{{user `scripts_folder`}}install-cloudbase.ps1"
 		},
 		{
 			"restart_timeout": "{{user `restart_timeout`}}",
@@ -109,11 +114,11 @@
 			"execute_command": "{{ .Vars }} cmd /c \"{{ .Path }}\"",
 			"remote_path": "/tmp/script.bat",
 			"scripts": [
-				"./scripts/set-winrm-automatic.bat",
-				"./scripts/dis-updates.bat",
-				"./scripts/compact.bat"
+				"{{user `scripts_folder`}}set-winrm-automatic.bat",
+				"{{user `scripts_folder`}}dis-updates.bat",
+				"{{user `scripts_folder`}}compact.bat"
 			],
 			"type": "windows-shell"
 		}
 	]
-  } 
+  }  

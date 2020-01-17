@@ -1,15 +1,7 @@
 .DS_Store
 /iso/*
 !/iso/README.md
-/output-hyperv-iso/
-/output-vmware/
-/output-vmware-iso/
-/output-vmware-vmx/
-/output-virtualbox/
-/output-virtualbox-iso/
-/output-virtualbox-ovf/
 /*.box
-/packer_cache/
 *.log
 *~
 *.swp
@@ -21,3 +13,4 @@ tmp
 path-to.vmx
 /builds/
 /files/win-7-files/
+packer_cache/

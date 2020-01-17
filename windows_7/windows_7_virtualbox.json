@@ -1,15 +1,19 @@
 {
-	"description": "File to build Windows 7 x64 using VirtualBox as the builder.",
+	"description": "File to build Windows 7 x64 using VirtualBox as the builder. This updates to SP1, does a bunch of other updates, and then configures for cloudbaseinit",
 
 	"variables": {
 		"guest_os_type": "Windows7_64",
 		"vm_name": "windows_7_virtualbox",
 		"os_version": "windows_7",
+
+		"shared_files": ".././files/",
+		"os_folder": "./files/",
+		"scripts_folder": ".././scripts/",
 		
 		"iso_checksum_type": "md5",
 		"iso_checksum": "1d0d239a252cb53e466d39e752b17c28",
 		"iso_url": "http://care.dlservice.microsoft.com/dl/download/evalx/win7/x64/EN/7600.16385.090713-1255_x64fre_enterprise_en-us_EVAL_Eval_Enterprise-GRMCENXEVAL_EN_DVD.iso",		
-		"autounattend": "./{{user `os_version`}}/files/Autounattend.xml",
+		"autounattend": "./files/Autounattend.xml",
 
 		"headless": "true",
 
@@ -23,7 +27,7 @@
 	},
 	"builders": [
 	  {
-		"http_directory": "./files/",
+		"http_directory": "{{user `shared_files`}}",
 			
 		"vm_name": "{{user `vm_name`}}",
 		"type": "virtualbox-iso",
@@ -44,10 +48,10 @@
 		"memory": "{{user `memory`}}",
 		"floppy_files": [
 		  "{{user `autounattend`}}",
-		  "./scripts/dis-updates.ps1",
-		  "./scripts/fixnetwork.ps1",
-		  "./scripts/microsoft-updates.bat",
-		  "./scripts/enable-winrm.ps1"
+		  "{{user `scripts_folder`}}dis-updates.ps1",
+		  "{{user `scripts_folder`}}fixnetwork.ps1",
+		  "{{user `scripts_folder`}}microsoft-updates.bat",
+		  "{{user `scripts_folder`}}enable-winrm.ps1"
 		],
 
 		"iso_checksum": "{{user `iso_checksum`}}",
@@ -55,7 +59,7 @@
 		"iso_url": "{{user `iso_url`}}",
 
 		"shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
-		"output_directory": "./builds/{{user `vm_name`}}",
+		"output_directory": ".././builds/{{user `vm_name`}}",
 		"vboxmanage": [
 			[
 				"storagectl",
@@ -81,7 +85,7 @@
 				"--type",
 				"dvddrive",
 				"--medium",
-				"./iso/virtio-win-0.1.171.iso"
+				".././iso/virtio-win-0.1.171.iso"
 			]
 		],
 		"vboxmanage_post": [
@@ -97,7 +101,7 @@
 	],
 	"provisioners": [
 		{
-			"script": "./windows_7/files/update-sp1.ps1",
+			"script": "{{user `os_folder`}}update-sp1.ps1",
 			"type": "powershell"
 		},
 		{
@@ -105,7 +109,7 @@
 			"restart_timeout": "20m"
 		},
 		{
-			"script": "./windows_7/files/update-2019-03-servicing-stack.ps1",
+			"script": "{{user `os_folder`}}update-2019-03-servicing-stack.ps1",
 			"type": "powershell"
 		},
 		{
@@ -113,7 +117,7 @@
 			"restart_timeout": "20m"
 		},
 		{
-			"script": "./windows_7/files/update-2019-09-sha2.ps1",
+			"script": "{{user `os_folder`}}update-2019-09-sha2.ps1",
 			"type": "powershell"
 		},
 		{
@@ -121,7 +125,7 @@
 			"restart_timeout": "20m"
 		},
 		{
-			"script": "./windows_7/files/update-2019-09-servicing-stack.ps1",
+			"script": "{{user `os_folder`}}update-2019-09-servicing-stack.ps1",
 			"type": "powershell"
 		},
 		{
@@ -129,7 +133,7 @@
 			"restart_timeout": "20m"
 		},
 		{
-			"script": "./windows_7/files/update-2016-convenience-rollup.ps1",
+			"script": "{{user `os_folder`}}update-2016-convenience-rollup.ps1",
 			"type": "powershell"
 		},
 		{
@@ -137,7 +141,7 @@
 			"restart_timeout": "20m"
 		},
 		{
-			"script": "./windows_7/files/update-2019-10-update-rollup.ps1",
+			"script": "{{user `os_folder`}}update-2019-10-update-rollup.ps1",
 			"type": "powershell"
 		},
 		{
@@ -145,7 +149,7 @@
 			"restart_timeout": "20m"
 		},
 		{
-			"script": "./windows_7/files/update-net48.ps1",
+			"script": "{{user `os_folder`}}update-net48.ps1",
 			"type": "powershell"
 		},
 		{
@@ -153,25 +157,34 @@
 			"restart_timeout": "20m"
 		},
 		{
-			"script": "./windows_7/files/update-powershell-5.1.ps1",
+			"script": "{{user `os_folder`}}update-powershell-5.1.ps1",
 			"type": "powershell"
 		},
 		{
 			"type": "windows-restart",
 			"restart_timeout": "20m"
+		},
+		{
+			"type": "powershell",
+			"script": "{{user `scripts_folder`}}install-cloudbase.ps1"
+		},
+		{
+			"restart_timeout": "{{user `restart_timeout`}}",
+			"pause_before": "120s",
+			"type": "windows-restart"
 		},
 		{
 			"scripts": [
-				"./scripts/set-winrm-automatic.bat",
-				"./scripts/enable-rdp.bat",
-				"./scripts/enable-winrm.bat",
-				"./scripts/compact.bat"
+				"{{user `scripts_folder`}}set-winrm-automatic.bat",
+				"{{user `scripts_folder`}}enable-rdp.bat",
+				"{{user `scripts_folder`}}enable-winrm.bat",
+				"{{user `scripts_folder`}}compact.bat"
 			],
 			"type": "windows-shell"
 		},
 		{
 			"type": "powershell",
-			"script": "./scripts/configure-remoting-for-ansible.ps1"
+			"script": "{{user `scripts_folder`}}configure-remoting-for-ansible.ps1"
 		}
 	]
   }  
