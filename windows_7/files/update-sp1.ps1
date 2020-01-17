@@ -21,6 +21,7 @@ try {
 
 Write-Host "$(Get-Date -Format G): Installing Windows 7 Service Pack 1"
 Start-Process -FilePath "C:\Updates\Windows6.1-KB976932-X64.exe" -ArgumentList "/unattend /nodialog /norestart" -Wait
+Write-Host "$(Get-Date -Format G): Finished installing Windows 7 Service Pack 1."
 
 # Remove-item got an error 
 #﻿You must provide a value expression on the right-hand side of the '-f' operator
@@ -29,9 +30,8 @@ Start-Process -FilePath "C:\Updates\Windows6.1-KB976932-X64.exe" -ArgumentList "
 #==> virtualbox-iso: +  "C:\Updates" -F <<<< orce -Recurse
 # It should probably be 
 # Remove-Item -Force -Recurse "C:\Updates"
-Remove-Item -
- "C:\Updates" -Force -Recurse
+Write-Host "$(Get-Date -Format G): Removing C:\Updates"
+Remove-Item -LiteralPath "C:\Updates" -Force -Recurse -ErrorAction SilentlyContinue
 #Remove-Item -Force -Recurse "C:\Updates"
-
-Write-Host "$(Get-Date -Format G): Finished installing Windows 7 Service Pack 1. The VM will now reboot and continue the installation process."
+Write-Host "$(Get-Date -Format G): The VM will now reboot and continue the installation process."
 Write-Host "$(Get-Date -Format G): This may take a couple of minutes."

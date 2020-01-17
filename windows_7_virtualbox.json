@@ -13,7 +13,7 @@
 
 		"headless": "true",
 
-		"disk_size": "15360",
+		"disk_size": "30720",
 		"cpus": "2",
 		"memory": "2048",
 
