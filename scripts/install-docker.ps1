@@ -47,5 +47,5 @@ if ($zip_url) {
 $ErrorActionPreference = 'Stop'
 Write-Output "Starting docker ..."
 $docker_service = get-service "*docker*"
-$docker_service | set-service -startuptype automatic -SilentlyContinue
-$docker_service | start-service -SilentlyContinue
+$docker_service | set-service -startuptype automatic -ErrorAction SilentlyContinue
+$docker_service | start-service -ErrorAction SilentlyContinue
