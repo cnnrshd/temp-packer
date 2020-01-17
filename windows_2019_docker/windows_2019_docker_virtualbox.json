@@ -57,7 +57,7 @@
                 "{{user `scripts_folder`}}fixnetwork.ps1",
                 "{{user `scripts_folder`}}enable-winrm.ps1",
 				"{{user `scripts_folder`}}configure-remoting-for-ansible.ps1",
-				"{{user `os_folder`}}install-container-features.ps1"
+				"{{user `scripts_folder`}}docker-2016/install-container-features.ps1"
 			],
 			
 			"iso_checksum": "{{user `iso_checksum`}}",
@@ -122,28 +122,28 @@
 				"docker_version={{user `docker_version`}}"
 			],
 			"scripts": [
-				"{{user `os_folder`}add-docker-group.ps1",
-				"{{user `os_folder`}install-docker.ps1",
-				"{{user `os_folder`}docker-pull.ps1",
-				"{{user `os_folder`}wait-for-tiworker.ps1",
-				"{{user `os_folder`}open-docker-insecure-port.ps1",
-				"{{user `os_folder`}open-docker-swarm-ports.ps1",
-				"{{user `os_folder`}remove-docker-key-json.ps1",
-				"{{user `os_folder`}disable-windows-defender.ps1"
+				"{{user `scripts_folder`}add-docker-group.ps1",
+				"{{user `scripts_folder`}install-docker.ps1",
+				"{{user `scripts_folder`}docker-pull.ps1",
+				"{{user `scripts_folder`}wait-for-tiworker.ps1",
+				"{{user `scripts_folder`}open-docker-insecure-port.ps1",
+				"{{user `scripts_folder`}open-docker-swarm-ports.ps1",
+				"{{user `scripts_folder`}remove-docker-key-json.ps1",
+				"{{user `scripts_folder`}disable-windows-defender.ps1"
 			],
 			"type": "powershell"
 		},
 		{
 			"execute_command": "{{ .Vars }} cmd /c \"{{ .Path }}\"",
-				"remote_path": "/tmp/script.bat",
-				"scripts": [
-					"{{user `scripts_folder`}}set-winrm-automatic.bat",
-					"{{user `scripts_folder`}}dis-updates.bat",
-					"{{user `scripts_folder`}}enable-rdp.bat",
-					"{{user `scripts_folder`}}uac-enable.bat",
-					"{{user `scripts_folder`}}compact.bat"
-				],
-				"type": "windows-shell"
+			"remote_path": "/tmp/script.bat",
+			"scripts": [
+				"{{user `scripts_folder`}}set-winrm-automatic.bat",
+				"{{user `scripts_folder`}}dis-updates.bat",
+				"{{user `scripts_folder`}}enable-rdp.bat",
+				"{{user `scripts_folder`}}uac-enable.bat",
+				"{{user `scripts_folder`}}compact.bat"
+			],
+			"type": "windows-shell"
 		}
 	]
 }

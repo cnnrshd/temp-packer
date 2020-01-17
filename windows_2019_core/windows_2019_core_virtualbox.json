@@ -3,7 +3,7 @@
 	
 	"variables": {						
 		"guest_os_type": "Windows2016_64",
-		"vm_name": "windows_2019_virtualbox",
+		"vm_name": "windows_2019_core_virtualbox",
 		"os_version": "windows_2019",
 
 		"shared_files": ".././files/",
