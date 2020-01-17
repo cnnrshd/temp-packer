@@ -123,7 +123,21 @@
 			],
 			"scripts": [
 				"{{user `scripts_folder`}add-docker-group.ps1",
-				"{{user `scripts_folder`}install-docker.ps1",
+				"{{user `scripts_folder`}install-docker.ps1"
+			],
+			"type": "powershell"
+		},
+		{
+			"type": "windows-restart",
+			"pause_before": "30s"
+		},
+		{
+			"environment_vars": [
+				"docker_images={{user `docker_images`}}",
+				"docker_provider={{user `docker_provider`}}",
+				"docker_version={{user `docker_version`}}"
+			],
+			"scripts": [
 				"{{user `scripts_folder`}docker-pull.ps1",
 				"{{user `scripts_folder`}wait-for-tiworker.ps1",
 				"{{user `scripts_folder`}open-docker-insecure-port.ps1",
