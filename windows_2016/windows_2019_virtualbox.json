@@ -1,0 +1,126 @@
+{
+    "description": "File to build windows 2019 x64 eval using virtualbox as the builder. Configures the machine to accept winrm remoting. Installs cloudbaseinit",
+    
+    "variables": {
+        "guest_os_type": "Windows2016_64",
+        "vm_name": "windows_2019_virtualbox",
+        "os_version": "windows_2019",
+
+        "shared_files": ".././files/",
+        "os_folder": "./files/",
+        "scripts_folder": ".././scripts/",
+        
+        "iso_checksum_type": "sha256",
+        "iso_checksum": "221F9ACBC727297A56674A0F1722B8AC7B6E840B4E1FFBDD538A9ED0DA823562",
+        "iso_url": "https://software-download.microsoft.com/download/sg/17763.379.190312-0539.rs5_release_svc_refresh_SERVER_EVAL_x64FRE_en-us.iso",		
+        "manually_download_iso_from": "https://www.microsoft.com/en-us/evalcenter/evaluate-windows-server-2019",
+        "autounattend": "./files/Autounattend.xml",
+
+        "headless": "true",
+
+        "disk_size": "15360",
+        "cpus": "2",
+        "memory": "2048",
+
+        "restart_timeout": "2h",
+        "winrm_timeout": "2h",
+        "boot_wait": "30s"
+    },
+    "builders": [
+        {
+            "http_directory": "{{user `shared_files`}}",
+            
+            "vm_name": "{{user `vm_name`}}",
+            "type": "virtualbox-iso",
+            "guest_additions_mode": "disable",
+            "guest_os_type":  "{{user `guest_os_type`}}",
+            "headless": "{{user `headless`}}",
+
+            "boot_command": "",
+            "boot_wait": "{{user `boot_wait`}}",
+
+            "communicator": "winrm",
+            "winrm_password": "P@ssw0rd-123!",
+            "winrm_timeout": "{{user `winrm_timeout`}}",
+            "winrm_username": "whiteteam",
+
+            "cpus": "{{user `cpus`}}",
+            "disk_size": "{{user `disk_size`}}",			
+            "memory": "{{user `memory`}}",
+            "floppy_files": [
+                "{{user `autounattend`}}",
+                "{{user `scripts_folder`}}disable-winrm.ps1",
+                "{{user `scripts_folder`}}fixnetwork.ps1",
+                "{{user `scripts_folder`}}enable-winrm.ps1",
+                "{{user `scripts_folder`}}configure-remoting-for-ansible.ps1"
+            ],
+                        
+            "iso_checksum": "{{user `iso_checksum`}}",
+            "iso_checksum_type": "{{user `iso_checksum_type`}}",
+            "iso_url": "{{user `iso_url`}}",
+
+            "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+            "output_directory": ".././builds/{{user `vm_name`}}",
+            "vboxmanage": [	
+                [
+                    "storagectl",
+                    "{{.Name}}",
+                    "--name",
+                    "SATA Controller",
+                    "--add",
+                    "sata",
+                    "--controller",
+                    "IntelAHCI",
+                    "--portcount",
+                    "2"
+                ],
+                [
+                    "storageattach",
+                    "{{.Name}}",
+                    "--storagectl",
+                    "SATA Controller",
+                    "--port",
+                    "0",
+                    "--device",
+                    "0",
+                    "--type",
+                    "dvddrive",
+                    "--medium",
+                    ".././iso/virtio-win-0.1.171.iso"
+                ]
+            ],
+            "vboxmanage_post": [
+                [
+                    "storagectl",
+                    "{{.Name}}",
+                    "--name",
+                    "SATA Controller",
+                    "--remove"
+                ]
+            ]
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "powershell",
+            "script": "{{user `scripts_folder`}}install-cloudbase.ps1"
+        },
+        {
+            "restart_timeout": "{{user `restart_timeout`}}",
+            "pause_before": "120s",
+            "type": "windows-restart"
+        },
+        {
+            "execute_command": "{{ .Vars }} cmd /c \"{{ .Path }}\"",
+            "remote_path": "/tmp/script.bat",
+            "scripts": [
+                "{{user `scripts_folder`}}set-winrm-automatic.bat",
+                "{{user `scripts_folder`}}dis-updates.bat",
+                "{{user `scripts_folder`}}enable-rdp.bat",
+                "{{user `scripts_folder`}}uac-enable.bat",
+                "{{user `scripts_folder`}}compact.bat"
+            ],
+            "type": "windows-shell"
+        }
+    ]
+  }  
