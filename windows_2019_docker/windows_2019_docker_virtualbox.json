@@ -1,5 +1,5 @@
 {
-	"description": "NOT TESTED. File to build windows 2019 x64 eval Core with Docker using virtualbox as the builder. Configures the machine to accept winrm remoting. Installs cloudbaseinit",
+	"description": "NOT TESTED. File to build windows 2019 x64 eval (with Docker) using virtualbox as the builder. Configures the machine to accept winrm remoting. Installs cloudbaseinit",
 	
 	"variables": {						
 		"guest_os_type": "Windows2016_64",
@@ -93,7 +93,7 @@
 					"--medium",
 					".././iso/virtio-win-0.1.171.iso"
 				]
-		],
+			],
 			"vboxmanage_post": [
 				[
 					"storagectl",

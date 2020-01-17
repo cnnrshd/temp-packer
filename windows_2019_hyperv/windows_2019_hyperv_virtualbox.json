@@ -1,14 +1,18 @@
 {
-	"description": "File to build windows 2019 x64 eval Core using virtualbox as the builder. Configures the machine to accept winrm remoting. Installs cloudbaseinit",
+	"description": "NOT TESTED. File to build windows 2019 x64 eval (with hyperv) using virtualbox as the builder. Configures the machine to accept winrm remoting. Installs cloudbaseinit",
 	
 	"variables": {						
 		"guest_os_type": "Windows2016_64",
-		"vm_name": "windows_2019_core_virtualbox",
+		"vm_name": "windows_2019_hyperv_virtualbox",
 		"os_version": "windows_2019",
 
 		"shared_files": ".././files/",
 		"os_folder": "./files/",
 		"scripts_folder": ".././scripts/",
+		
+		"docker_images": "mcr.microsoft.com/windows/nanoserver:1809 mcr.microsoft.com/windows/servercore:ltsc2019 mcr.microsoft.com/windows/servercore:1809 mcr.microsoft.com/windows:1809",
+		"docker_provider": "ee",
+		"docker_version": "19.03.5",
 		
 		"iso_checksum_type": "sha256",
 		"iso_checksum": "221F9ACBC727297A56674A0F1722B8AC7B6E840B4E1FFBDD538A9ED0DA823562",
@@ -18,9 +22,9 @@
 
 		"headless": "true",
 
-		"disk_size": "15360",
+		"disk_size": "30720",
 		"cpus": "2",
-		"memory": "2048",
+		"memory": "4096",
 
 		"restart_timeout": "2h",
 		"winrm_timeout": "2h",
@@ -52,7 +56,8 @@
                 "{{user `scripts_folder`}}disable-winrm.ps1",
                 "{{user `scripts_folder`}}fixnetwork.ps1",
                 "{{user `scripts_folder`}}enable-winrm.ps1",
-                "{{user `scripts_folder`}}configure-remoting-for-ansible.ps1"
+				"{{user `scripts_folder`}}configure-remoting-for-ansible.ps1",
+				"{{user `scripts_folder`}}docker-2016/install-container-features.ps1"
 			],
 			
 			"iso_checksum": "{{user `iso_checksum`}}",
@@ -109,18 +114,18 @@
             "restart_timeout": "{{user `restart_timeout`}}",
             "pause_before": "120s",
             "type": "windows-restart"
-        },
+		},
 		{
 			"execute_command": "{{ .Vars }} cmd /c \"{{ .Path }}\"",
-				"remote_path": "/tmp/script.bat",
-				"scripts": [
-					"{{user `scripts_folder`}}set-winrm-automatic.bat",
-					"{{user `scripts_folder`}}dis-updates.bat",
-					"{{user `scripts_folder`}}enable-rdp.bat",
-					"{{user `scripts_folder`}}uac-enable.bat",
-					"{{user `scripts_folder`}}compact.bat"
-				],
-				"type": "windows-shell"
+			"remote_path": "/tmp/script.bat",
+			"scripts": [
+				"{{user `scripts_folder`}}set-winrm-automatic.bat",
+				"{{user `scripts_folder`}}dis-updates.bat",
+				"{{user `scripts_folder`}}enable-rdp.bat",
+				"{{user `scripts_folder`}}uac-enable.bat",
+				"{{user `scripts_folder`}}compact.bat"
+			],
+			"type": "windows-shell"
 		}
 	]
 }
