@@ -1,0 +1,80 @@
+{
+    "description": "File to build windows 2016 x64 eval using virtualbox as the builder. Configures the machine to accept winrm remoting. Installs cloudbaseinit",
+    
+    "variables": {
+        "guest_os_type": "Windows2016_64",
+        "vm_name": "blake",
+        "os_version": "windows_2016",
+
+        "shared_files": ".././files/",
+        "os_folder": "./files/",
+        "scripts_folder": ".././scripts/",
+        
+		"iso_checksum_type": "md5",
+		"iso_checksum": "70721288BBCDFE3239D8F8C0FAE55F1F",
+		"iso_url": "https://software-download.microsoft.com/download/pr/Windows_Server_2016_Datacenter_EVAL_en-us_14393_refresh.ISO",
+        "manually_download_iso_from": "https://www.microsoft.com/en-us/evalcenter/evaluate-windows-server-2019",
+		"autounattend": "./base/Autounattend.xml",
+
+        "headless": "true",
+
+        "disk_size": "15360",
+        "cpus": "2",
+        "memory": "2048",
+
+        "restart_timeout": "2h",
+        "winrm_timeout": "2h",
+        "boot_wait": "30s"
+    },
+    "builders": [
+        {
+            "http_directory": "{{user `shared_files`}}",
+            
+            "vm_name": "{{user `vm_name`}}",
+            "type": "virtualbox-iso",
+            "guest_additions_mode": "disable",
+            "guest_os_type":  "{{user `guest_os_type`}}",
+            "headless": "{{user `headless`}}",
+
+            "boot_command": "",
+            "boot_wait": "{{user `boot_wait`}}",
+
+            "communicator": "winrm",
+            "winrm_password": "P@$$w0rd-*",
+            "winrm_timeout": "{{user `winrm_timeout`}}",
+            "winrm_username": "sysadmin",
+
+            "cpus": "{{user `cpus`}}",
+            "disk_size": "{{user `disk_size`}}",			
+            "memory": "{{user `memory`}}",
+            "floppy_files": [
+                "{{user `autounattend`}}",
+                "{{user `scripts_folder`}}disable-winrm.ps1",
+                "{{user `scripts_folder`}}fixnetwork.ps1",
+                "{{user `scripts_folder`}}enable-winrm.ps1",
+                "{{user `scripts_folder`}}configure-remoting-for-ansible.ps1"
+            ],
+                        
+            "iso_checksum": "{{user `iso_checksum`}}",
+            "iso_checksum_type": "{{user `iso_checksum_type`}}",
+            "iso_url": "{{user `iso_url`}}",
+
+            "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+            "output_directory": ".././builds/{{user `vm_name`}}"
+        }
+    ],
+    "provisioners": [
+        {
+            "execute_command": "{{ .Vars }} cmd /c \"{{ .Path }}\"",
+            "remote_path": "/tmp/script.bat",
+            "scripts": [
+                "{{user `scripts_folder`}}set-winrm-automatic.bat",
+                "{{user `scripts_folder`}}dis-updates.bat",
+                "{{user `scripts_folder`}}enable-rdp.bat",
+                "{{user `scripts_folder`}}uac-enable.bat",
+                "{{user `scripts_folder`}}compact.bat"
+            ],
+            "type": "windows-shell"
+        }
+    ]
+  }  

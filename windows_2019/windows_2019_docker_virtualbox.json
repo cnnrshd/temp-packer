@@ -132,22 +132,6 @@
 			"pause_before": "30s"
 		},
 		{
-			"environment_vars": [
-				"docker_images={{user `docker_images`}}",
-				"docker_provider={{user `docker_provider`}}",
-				"docker_version={{user `docker_version`}}"
-			],
-			"scripts": [
-				"{{user `scripts_folder`}docker-pull.ps1",
-				"{{user `scripts_folder`}wait-for-tiworker.ps1",
-				"{{user `scripts_folder`}open-docker-insecure-port.ps1",
-				"{{user `scripts_folder`}open-docker-swarm-ports.ps1",
-				"{{user `scripts_folder`}remove-docker-key-json.ps1",
-				"{{user `scripts_folder`}disable-windows-defender.ps1"
-			],
-			"type": "powershell"
-		},
-		{
 			"execute_command": "{{ .Vars }} cmd /c \"{{ .Path }}\"",
 			"remote_path": "/tmp/script.bat",
 			"scripts": [

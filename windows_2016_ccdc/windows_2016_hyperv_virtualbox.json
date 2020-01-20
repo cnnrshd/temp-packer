@@ -1,9 +1,9 @@
 {
-    "description": "File to build windows 2016 x64 eval (with docker) using virtualbox as the builder. Configures the machine to accept winrm remoting. Installs cloudbaseinit",
+    "description": "File to build windows 2016 x64 eval (with hyperv) using virtualbox as the builder. Configures the machine to accept winrm remoting. Installs cloudbaseinit",
     
     "variables": {
         "guest_os_type": "Windows2016_64",
-        "vm_name": "windows_2016_docker_virtualbox",
+        "vm_name": "windows_2016_hyperv_virtualbox",
         "os_version": "windows_2016",
 
         "shared_files": ".././files/",
@@ -18,7 +18,7 @@
 		"iso_checksum": "70721288BBCDFE3239D8F8C0FAE55F1F",
 		"iso_url": "https://software-download.microsoft.com/download/pr/Windows_Server_2016_Datacenter_EVAL_en-us_14393_refresh.ISO",
         "manually_download_iso_from": "https://www.microsoft.com/en-us/evalcenter/evaluate-windows-server-2019",
-        "autounattend": "./docker/Autounattend.xml",
+        "autounattend": "./files/Autounattend.xml",
 
         "headless": "true",
 
@@ -114,22 +114,6 @@
             "restart_timeout": "{{user `restart_timeout`}}",
             "pause_before": "120s",
             "type": "windows-restart"
-		},
-		{
-			"environment_vars": [
-				"docker_images={{user `docker_images`}}",
-				"docker_provider={{user `docker_provider`}}",
-				"docker_version={{user `docker_version`}}"
-			],
-			"scripts": [
-				"{{user `scripts_folder`}}add-docker-group.ps1",
-				"{{user `scripts_folder`}}install-docker.ps1"
-			],
-			"type": "powershell"
-		},
-		{
-			"type": "windows-restart",
-			"pause_before": "30s"
 		},
         {
             "execute_command": "{{ .Vars }} cmd /c \"{{ .Path }}\"",
