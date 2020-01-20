@@ -17,9 +17,9 @@
 
 		"headless": "true",
 
-		"disk_size": "15360",
-		"cpus": "2",
-		"memory": "2048",
+		"disk_size": "61440",
+		"cpus": "4",
+		"memory": "4096",
 
 		"restart_timeout": "2h",
 		"winrm_timeout": "2h",
