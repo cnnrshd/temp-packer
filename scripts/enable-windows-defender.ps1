@@ -159,3 +159,5 @@ Takeown-Registry("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WinDefend
 Set-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Services\WinDefend" "Start" 2
 Set-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Services\WdNisSvc" "Start" 2
 Set-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Services\Sense" "Start" 2
+Takeown-Registry("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows Defender\Features")
+Set-ItemProperty "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows Defender\Features" "TamperProtection" "5"
