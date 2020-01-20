@@ -85,7 +85,7 @@
 					"--type",
 					"dvddrive",
 					"--medium",
-					".././iso/virtio-win-0.1.171.iso"
+					".././iso/virtio-win.iso"
 				]
 			],
 			"vboxmanage_post": [
