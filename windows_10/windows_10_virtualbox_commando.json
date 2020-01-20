@@ -102,7 +102,7 @@
 	"provisioners": [
 		{
 			"type": "powershell",
-			"script": "{{user `scripts_folder}}install_commando.ps1",
+			"script": "{{user `scripts_folder`}}install_commando.ps1",
 			"environment_vars": "PASSWORD=P@ssw0rd-123!"
 		},
 		{
