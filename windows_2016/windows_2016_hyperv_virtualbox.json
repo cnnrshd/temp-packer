@@ -123,6 +123,7 @@
                 "{{user `scripts_folder`}}dis-updates.bat",
                 "{{user `scripts_folder`}}enable-rdp.bat",
                 "{{user `scripts_folder`}}uac-enable.bat",
+				"{{user `scripts_folder`}}sysprep.bat",
                 "{{user `scripts_folder`}}compact.bat"
             ],
             "type": "windows-shell"

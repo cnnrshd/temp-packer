@@ -115,6 +115,7 @@
 			"scripts": [
 				"{{user `scripts_folder`}}set-winrm-automatic.bat",
 				"{{user `scripts_folder`}}dis-updates.bat",
+				"{{user `scripts_folder`}}sysprep.bat",
 				"{{user `scripts_folder`}}compact.bat"
 			],
 			"type": "windows-shell"

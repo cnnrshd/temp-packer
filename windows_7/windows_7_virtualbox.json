@@ -174,17 +174,18 @@
 			"type": "windows-restart"
 		},
 		{
+			"type": "powershell",
+			"script": "{{user `scripts_folder`}}configure-remoting-for-ansible.ps1"
+		},
+		{
 			"scripts": [
 				"{{user `scripts_folder`}}set-winrm-automatic.bat",
 				"{{user `scripts_folder`}}enable-rdp.bat",
 				"{{user `scripts_folder`}}enable-winrm.bat",
+				"{{user `scripts_folder`}}sysprep.bat",
 				"{{user `scripts_folder`}}compact.bat"
 			],
 			"type": "windows-shell"
-		},
-		{
-			"type": "powershell",
-			"script": "{{user `scripts_folder`}}configure-remoting-for-ansible.ps1"
 		}
 	]
   }  
