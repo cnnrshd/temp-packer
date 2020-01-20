@@ -1,0 +1,151 @@
+{	
+	"description": "File to build windows 10 x64 eval using virtualbox as the builder. Configures the machine to accept winrm remoting.",
+
+	"variables": {
+		"guest_os_type": "Windows10_64",
+		"vm_name": "windows_10_virtualbox_commando",
+		"os_version": "windows_10",
+
+		"shared_files": ".././files/",
+		"os_folder": "./files/",
+		"scripts_folder": ".././scripts/",
+
+		"iso_checksum_type": "sha256",
+		"iso_checksum": "ab4862ba7d1644c27f27516d24cb21e6b39234eb3301e5f1fb365a78b22f79b3",
+		"iso_url": "https://software-download.microsoft.com/download/pr/18362.30.190401-1528.19h1_release_svc_refresh_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso",		
+		"autounattend": "./files/Autounattend.xml",
+
+		"headless": "true",
+
+		"disk_size": "61440",
+		"cpus": "4",
+		"memory": "4096",
+
+		"restart_timeout": "2h",
+		"winrm_timeout": "2h",
+		"boot_wait": "30s"
+	},
+	"builders": [
+		{
+			"http_directory": "{{user `shared_files`}}",
+			
+			"vm_name": "{{user `vm_name`}}",
+			"type": "virtualbox-iso",
+			"guest_additions_mode": "disable",
+			"guest_os_type":  "{{user `guest_os_type`}}",
+			"headless": "{{user `headless`}}",
+
+			"boot_command": "",
+			"boot_wait": "{{user `boot_wait`}}",
+
+			"communicator": "winrm",
+			"winrm_password": "P@ssw0rd-123!",
+			"winrm_timeout": "{{user `winrm_timeout`}}",
+			"winrm_username": "whiteteam",
+
+			"cpus": "{{user `cpus`}}",
+			"disk_size": "{{user `disk_size`}}",			
+			"memory": "{{user `memory`}}",
+			"floppy_files": [
+				"{{user `autounattend`}}",
+				"{{user `scripts_folder`}}disable-winrm.ps1",			
+				"{{user `scripts_folder`}}fixnetwork.ps1",
+				"{{user `scripts_folder`}}enable-winrm.ps1",
+				"{{user `scripts_folder`}}configure-remoting-for-ansible.ps1"
+			],
+						
+			"iso_checksum": "{{user `iso_checksum`}}",
+			"iso_checksum_type": "{{user `iso_checksum_type`}}",
+			"iso_url": "{{user `iso_url`}}",
+
+			"shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+			"output_directory": ".././builds/{{user `vm_name`}}",
+			"vboxmanage": [	
+				[
+					"storagectl",
+					"{{.Name}}",
+					"--name",
+					"SATA Controller",
+					"--add",
+					"sata",
+					"--controller",
+					"IntelAHCI",
+					"--portcount",
+					"2"
+				],
+				[
+					"storageattach",
+					"{{.Name}}",
+					"--storagectl",
+					"SATA Controller",
+					"--port",
+					"0",
+					"--device",
+					"0",
+					"--type",
+					"dvddrive",
+					"--medium",
+					".././iso/virtio-win.iso"
+				]
+			],
+			"vboxmanage_post": [
+				[
+					"storagectl",
+					"{{.Name}}",
+					"--name",
+					"SATA Controller",
+					"--remove"
+				]
+			]
+		}
+	],
+	"provisioners": [
+		{
+			"type": "powershell",
+			"script": "{{user `scripts_folder`}}disable-windows-defender.ps1",
+			"environment_vars": "RUN_COUNT=1"
+		},
+		{
+			"type": "windows-restart",
+			"pause_before": "15s"
+		},
+		{
+			"type": "powershell",
+			"script": "{{user `scripts_folder`}}disable-windows-defender.ps1",
+			"environment_vars": "RUN_COUNT=2"
+		},
+		{
+			"type": "windows-restart",
+			"pause_before": "15s"
+		},
+		{
+			"type": "powershell",
+			"script": "{{user `scripts_folder`}}install_commando.ps1",
+			"environment_vars": "PASSWORD=P@ssw0rd-123!"
+		},
+		{
+			"type": "powershell",
+			"script": "{{user `scripts_folder`}}enable-windows-defender.ps1"
+		},
+		{
+			"type": "powershell",
+			"script": "{{user `scripts_folder`}}install-cloudbase.ps1"
+		},
+		{
+			"restart_timeout": "{{user `restart_timeout`}}",
+			"pause_before": "120s",
+			"type": "windows-restart"
+		},
+		{
+			"execute_command": "{{ .Vars }} cmd /c \"{{ .Path }}\"",
+			"remote_path": "/tmp/script.bat",
+			"scripts": [
+				"{{user `scripts_folder`}}set-winrm-automatic.bat",
+				"{{user `scripts_folder`}}dis-updates.bat",
+				"{{user `scripts_folder`}}sysprep.bat",
+				"{{user `scripts_folder`}}compact.bat"
+			],
+			"type": "windows-shell"
+		}
+	]
+  } 
