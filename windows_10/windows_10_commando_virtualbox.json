@@ -105,20 +105,6 @@
 	],
 	"provisioners": [
 		{
-			"type": "powershell",
-			"script": "{{user `scripts_folder`}}disable-windows-defender.ps1",
-			"environment_vars": "RUN_COUNT=1"
-		},
-		{
-			"type": "windows-restart",
-			"pause_before": "15s"
-		},
-		{
-			"type": "powershell",
-			"script": "{{user `scripts_folder`}}disable-windows-defender.ps1",
-			"environment_vars": "RUN_COUNT=2"
-		},
-		{
 			"type": "windows-restart",
 			"pause_before": "15s"
 		},
