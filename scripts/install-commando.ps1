@@ -11,8 +11,14 @@
 param (
   [string]$password = $env:PASSWORD,
 	[string]$profile_file = $null, 
-  [bool]$nochecks = $env:NO_CHECKS
+  [bool]$nochecks = $false
 )
+
+if $env:NO_CHECKS -eq "true" {
+	$nochecks = $true
+} else {
+	$nochecks = $false
+}
 
 function ConvertFrom-Json([object] $item) {
 <#

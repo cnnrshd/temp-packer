@@ -105,20 +105,12 @@
 	],
 	"provisioners": [
 		{
-			"type": "windows-restart",
-			"pause_before": "15s"
-		},
-		{
 			"type": "powershell",
 			"script": "{{user `scripts_folder`}}install-commando.ps1",
 			"environment_vars": [
 				"PASSWORD=P@ssw0rd-123!",
-				"NO_CHECKS=$true"
+				"NO_CHECKS=true"
 			]
-		},
-		{
-			"type": "powershell",
-			"script": "{{user `scripts_folder`}}enable-windows-defender.ps1"
 		},
 		{
 			"type": "powershell",
