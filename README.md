@@ -1,3 +1,6 @@
+# NOTE: YOU WILL NEED TO DOWNLOAD AND RENAME THE VIRTIO ISO
+- Download it from https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/virtio-win.iso
+- Place it in /iso/ with the name of virtio-win.iso
 # Windows Templates for Packer
 
 [![Build status](https://ci.appveyor.com/api/projects/status/76pea1oexae5ca05?svg=true)](https://ci.appveyor.com/project/StefanScherer/packer-windows)
