@@ -165,4 +165,4 @@ Set-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Services\WdNisSvc" "AutorunsDis
 Set-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Services\Sense" "Start" 4
 Set-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Services\Sense" "AutorunsDisabled" 3
 Takeown-Registry("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows Defender\Features")
-Set-ItemProperty "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows Defender\Features" "TamperProtection" "0"
+Set-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows Defender\Features" "TamperProtection" "0"
