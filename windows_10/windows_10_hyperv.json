@@ -64,20 +64,9 @@
 	],
 	"provisioners": [
 		{
-			"type": "powershell",
-			"inline": "bcdedit /set testsigning on"
-		},
-		{
 			"type": "windows-restart",
 			"pause_before": "15s",
 			"restart_timeout": "{{user `restart_timeout`}}"
-		},
-		{
-			"environment_vars": [
-				"OS_VERS={{user `os_version`}}"
-			],
-			"type": "powershell",
-			"script": "./scripts/install-drivers.ps1"
 		},
 		{
 			"type": "powershell",

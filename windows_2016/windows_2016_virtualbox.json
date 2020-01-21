@@ -9,6 +9,10 @@
         "shared_files": ".././files/",
         "os_folder": "./files/",
         "scripts_folder": ".././scripts/",
+
+        "final_username": "whiteteam",
+		"final_password": "P@ssw0rd-123!",
+		"final_machine_name": "win2016",
         
 		"iso_checksum_type": "md5",
 		"iso_checksum": "70721288BBCDFE3239D8F8C0FAE55F1F",
@@ -110,6 +114,16 @@
             "pause_before": "120s",
             "type": "windows-restart"
         },
+        {
+			"type": "powershell",
+			"script":"{{user `scripts_folder`}}get-unattend.ps1",
+			"environment_vars": 
+			[
+				"MACHINE_USER_PASSWORD={{user `final_password`}}",
+				"MACHINE_USERNAME={{user `final_username`}}",
+				"MACHINE_NAME={{user `final_machine_name`}}"
+			]
+		},
         {
             "execute_command": "{{ .Vars }} cmd /c \"{{ .Path }}\"",
             "remote_path": "/tmp/script.bat",

@@ -13,6 +13,10 @@
 		"docker_images": "mcr.microsoft.com/windows/nanoserver:1809 mcr.microsoft.com/windows/servercore:ltsc2019 mcr.microsoft.com/windows/servercore:1809 mcr.microsoft.com/windows:1809",
 		"docker_provider": "ee",
 		"docker_version": "19.03.5",
+
+		"final_username": "whiteteam",
+		"final_password": "P@ssw0rd-123!",
+		"final_machine_name": "win2019-hv",
 		
 		"iso_checksum_type": "sha256",
 		"iso_checksum": "221F9ACBC727297A56674A0F1722B8AC7B6E840B4E1FFBDD538A9ED0DA823562",
@@ -44,9 +48,9 @@
             "boot_wait": "{{user `boot_wait`}}",
 
             "communicator": "winrm",
-            "winrm_password": "P@ssw0rd-123!",
+            "winrm_password": "{{user `final_password`}}",
             "winrm_timeout": "{{user `winrm_timeout`}}",
-            "winrm_username": "whiteteam",
+			"winrm_username": "{{user `final_username`}}",
 
 			"cpus": "{{user `cpus`}}",
             "disk_size": "{{user `disk_size`}}",			
@@ -114,6 +118,16 @@
             "restart_timeout": "{{user `restart_timeout`}}",
             "pause_before": "120s",
             "type": "windows-restart"
+		},
+		{
+			"type": "powershell",
+			"script":"{{user `scripts_folder`}}get-unattend.ps1",
+			"environment_vars": 
+			[
+				"MACHINE_USER_PASSWORD={{user `final_password`}}",
+				"MACHINE_USERNAME={{user `final_username`}}",
+				"MACHINE_NAME={{user `final_machine_name`}}"
+			]
 		},
 		{
 			"execute_command": "{{ .Vars }} cmd /c \"{{ .Path }}\"",
