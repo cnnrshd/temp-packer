@@ -11,7 +11,7 @@
 param (
   [string]$password = $env:PASSWORD,
 	[string]$profile_file = $null, 
-  [bool]$nochecks = $false
+  [bool]$nochecks = $env:NO_CHECKS
 )
 
 function ConvertFrom-Json([object] $item) {
