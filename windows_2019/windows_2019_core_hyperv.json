@@ -10,8 +10,8 @@
 		"os_folder": "./files/",
 		"scripts_folder": ".././scripts/",
 
-		"final_username": "whiteteam",
-		"final_password": "P@ssw0rd-123!",
+		"final_username": "ritsec",
+		"final_password": "P@$$word-123!",
 		"final_machine_name": "win2019-core",
 		
 		"iso_checksum_type": "sha256",

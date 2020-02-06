@@ -14,8 +14,8 @@
 		"docker_provider": "ee",
 		"docker_version": "19.03.5",
 
-		"final_username": "whiteteam",
-		"final_password": "P@ssw0rd-123!",
+		"final_username": "ritsec",
+		"final_password": "P@$$word-123!",
 		"final_machine_name": "win2019-hv",
 		
 		"iso_checksum_type": "sha256",
