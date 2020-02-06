@@ -35,9 +35,9 @@
 			"boot_wait": "{{user `boot_wait`}}",
 
 			"communicator": "winrm",
-			"winrm_password": "P@ssw0rd-123!",
+			"winrm_password": "P@$$word-123!",
 			"winrm_timeout": "{{user `winrm_timeout`}}",
-			"winrm_username": "whiteteam",
+			"winrm_username": "ritsec",
 
 			"enable_secure_boot": false,
 			"enable_virtualization_extensions": true,

@@ -83,8 +83,8 @@
             </DiskConfiguration>
             <UserData>
                 <AcceptEula>true</AcceptEula>
-                <FullName>Whiteteam</FullName>
-                <Organization>Whiteteam</Organization>
+                <FullName>ritsec</FullName>
+                <Organization>ritsec</Organization>
 
                 <!--
                     NOTE: If you are re-configuring this for use of a retail key
@@ -152,19 +152,19 @@
         <component xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
             <UserAccounts>
                 <AdministratorPassword>
-                    <Value>P@ssw0rd-123!</Value>
+                    <Value>P@$$word-123!</Value>
                     <PlainText>true</PlainText>
                 </AdministratorPassword>
                 <LocalAccounts>
                     <LocalAccount wcm:action="add">
                         <Password>
-                            <Value>P@ssw0rd-123!</Value>
+                            <Value>P@$$word-123!</Value>
                             <PlainText>true</PlainText>
                         </Password>
-                        <Description>Whiteteam User</Description>
-                        <DisplayName>whiteteam</DisplayName>
+                        <Description>ritsec User</Description>
+                        <DisplayName>ritsec</DisplayName>
                         <Group>administrators</Group>
-                        <Name>whiteteam</Name>
+                        <Name>ritsec</Name>
                     </LocalAccount>
                 </LocalAccounts>
             </UserAccounts>
@@ -176,10 +176,10 @@
             </OOBE>
             <AutoLogon>
                 <Password>
-                    <Value>P@ssw0rd-123!</Value>
+                    <Value>P@$$word-123!</Value>
                     <PlainText>true</PlainText>
                 </Password>
-                <Username>whiteteam</Username>
+                <Username>ritsec</Username>
                 <Enabled>true</Enabled>
             </AutoLogon>
             <FirstLogonCommands>
@@ -246,12 +246,12 @@
                     <Description>Disable Hibernation Mode</Description>
                 </SynchronousCommand>
                 <SynchronousCommand wcm:action="add">
-                    <CommandLine>cmd.exe /c wmic useraccount where "name='whiteteam'" set PasswordExpires=FALSE</CommandLine>
+                    <CommandLine>cmd.exe /c wmic useraccount where "name='ritsec'" set PasswordExpires=FALSE</CommandLine>
                     <Order>12</Order>
-                    <Description>Disable password expiration for whiteteam user</Description>
+                    <Description>Disable password expiration for ritsec user</Description>
                 </SynchronousCommand>
                 <SynchronousCommand wcm:action="add">
-                    <CommandLine>%SystemRoot%\System32\reg.exe ADD "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon" /v DefaultPassword /t REG_SZ /d "whiteteam" /f</CommandLine>
+                    <CommandLine>%SystemRoot%\System32\reg.exe ADD "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon" /v DefaultPassword /t REG_SZ /d "ritsec" /f</CommandLine>
                     <Order>13</Order>
                     <Description>Enable AutoLogon</Description>
                 </SynchronousCommand>
