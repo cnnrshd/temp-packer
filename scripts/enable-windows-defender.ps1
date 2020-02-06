@@ -131,6 +131,9 @@ function Elevate-Privileges {
 Write-Output "Elevating priviledges for this process"
 do {} until (Elevate-Privileges SeTakeOwnershipPrivilege)
 
+### Adding this command to try to enable it after disabling it "the right way"
+Set-MpPreference -DisableIntrusionPreventionSystem $false -DisableIOAVProtection $false -DisableRealtimeMonitoring $false -DisableScriptScanning $false 
+
 $tasks = @(
     "\Microsoft\Windows\Windows Defender\Windows Defender Cache Maintenance"
     "\Microsoft\Windows\Windows Defender\Windows Defender Cleanup"

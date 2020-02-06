@@ -1,6 +1,10 @@
 # TODO:
 - Change the DNS server to 1.1.1.1 for resolving
-
+- disable-windows-defender doesn't work. Change the windows 10 version to anything above build 1511 (build 1607 and newer should be good, ideally 1709)
+  - I am able to disable the scheduled task in a 1703 edu build
+- Windows update tasks aren't getting disabled. Need to look for a newer Debloat script - can try `disable-scheduledtask -Taskpath "\Microsoft\Windows\WindowsUpdate\"`
+- Onedrive setup is not getting deleted. Check `C:\Windows\SysWOW64\OneDriveSetup.exe` and remove it
+- 
 ## Some weird virtualbox stuff
 - IDE controller is called "IDE Controller", and it has 2 ports by default. Both are in use, first
 

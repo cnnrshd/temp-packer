@@ -15,8 +15,8 @@
 		"final_machine_name": "win10",
 
 		"iso_checksum_type": "sha256",
-		"iso_checksum": "ab4862ba7d1644c27f27516d24cb21e6b39234eb3301e5f1fb365a78b22f79b3",
-		"iso_url": "https://software-download.microsoft.com/download/pr/18362.30.190401-1528.19h1_release_svc_refresh_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso",		
+		"iso_checksum": "5455710CE0BC75DC3C47D33BF98CFBB4FACA5C8A9E27FBBD8D4A5C4EE013D871",
+		"iso_url": "../iso/Win10_EDU_1703_UpdatedMarch2017_x64.iso",		
 		"autounattend": "./files/Autounattend.xml",
 
 		"headless": "true",
@@ -104,6 +104,43 @@
 		}
 	],
 	"provisioners": [
+		{
+			"type": "powershell",
+			"script": "{{user `scripts_folder`}}disable-windows-defender.ps1",
+			"environment_vars": [
+				"RUN_COUNT=1"
+			]
+		},
+		{
+			"type": "windows-restart",			
+			"restart_timeout": "{{user `restart_timeout`}}",
+			"pause_before": "15s"
+		},
+		{
+			"type": "powershell",
+			"script": "{{user `scripts_folder`}}disable-windows-defender.ps1",
+			"environment_vars": [
+				"RUN_COUNT=2"
+			]
+		},
+		{
+			"type": "windows-restart",			
+			"restart_timeout": "{{user `restart_timeout`}}",
+			"pause_before": "15s"
+		},
+		{
+			"type": "powershell",
+			"script": "{{user `scripts_folder`}}debloat-windows.ps1"
+		},
+		{
+			"type": "powershell",
+			"script": "{{user `scripts_folder`}}temp-connor-debloat.ps1"
+		},
+		{
+			"type": "windows-restart",			
+			"restart_timeout": "{{user `restart_timeout`}}",
+			"pause_before": "15s"
+		},
 		{
 			"type": "powershell",
 			"script": "{{user `scripts_folder`}}install-cloudbase.ps1"

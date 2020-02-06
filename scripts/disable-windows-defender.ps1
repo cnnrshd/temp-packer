@@ -133,6 +133,9 @@ Write-Host "Disabling Windows Defender (Run $env:RUN_COUNT of 2)"
 Write-Output "Elevating priviledges for this process"
 do {} until (Elevate-Privileges SeTakeOwnershipPrivilege)
 
+### Adding this command to try to disable it "the right way"
+Set-MpPreference -DisableIntrusionPreventionSystem $true -DisableIOAVProtection $true -DisableRealtimeMonitoring $true -DisableScriptScanning $true 
+
 $tasks = @(
     "\Microsoft\Windows\Windows Defender\Windows Defender Cache Maintenance"
     "\Microsoft\Windows\Windows Defender\Windows Defender Cleanup"

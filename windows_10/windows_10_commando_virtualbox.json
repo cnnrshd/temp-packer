@@ -106,6 +106,39 @@
 	"provisioners": [
 		{
 			"type": "powershell",
+			"script": "{{user `scripts_folder`}}disable-windows-defender.ps1",
+			"environment_vars": [
+				"RUN_COUNT=1"
+			]
+		},
+		{
+			"type": "windows-restart",			
+			"restart_timeout": "{{user `restart_timeout`}}",
+			"pause_before": "15s"
+		},
+		{
+			"type": "powershell",
+			"script": "{{user `scripts_folder`}}disable-windows-defender.ps1",
+			"environment_vars": [
+				"RUN_COUNT=2"
+			]
+		},
+		{
+			"type": "windows-restart",			
+			"restart_timeout": "{{user `restart_timeout`}}",
+			"pause_before": "15s"
+		},
+		{
+			"type": "powershell",
+			"script": "{{user `scripts_folder`}}debloat-windows.ps1"
+		},		
+		{
+			"type": "windows-restart",			
+			"restart_timeout": "{{user `restart_timeout`}}",
+			"pause_before": "15s"
+		},
+		{
+			"type": "powershell",
 			"script": "{{user `scripts_folder`}}install-commando.ps1",
 			"environment_vars": [
 				"PASSWORD=P@ssw0rd-123!",

@@ -14,7 +14,7 @@ param (
   [bool]$nochecks = $false
 )
 
-if $env:NO_CHECKS -eq "true" {
+if ($env:NO_CHECKS -eq "true") {
 	$nochecks = $true
 } else {
 	$nochecks = $false
