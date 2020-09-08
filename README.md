@@ -3,7 +3,12 @@
 - Place it in /iso/ with the name of virtio-win.iso
 # Windows Templates for Packer
 
-[![Build status](https://ci.appveyor.com/api/projects/status/76pea1oexae5ca05?svg=true)](https://ci.appveyor.com/project/StefanScherer/packer-windows)
+
+### Pre-Introduction
+
+This is a modification of [stefanscherer/packer-windows](https://github.com/StefanScherer/packer-windows).
+This is out of date, the one on gitlab.ritsec.cloud is newer.
+It is largely a reo-organization to fit our styel better, with some added scripts.
 
 ### Introduction
 
